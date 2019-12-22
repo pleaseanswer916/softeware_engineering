@@ -1,0 +1,48 @@
+/* STEP AND STEP line 逐点生成斜率小于９０的直线              */
+#include <math.h>
+#include "display.h"
+main()
+ {
+  int xo,yo,xa,ya,x,y;
+  int dx,dy,c,f;
+    Initialize();
+    printf("input start x,y(x=0-640,y=0-480)\n");       /*    按照条件输入直线的两个点    */
+    scanf("%d,%d",&xo,&yo);
+    printf("end xa:%d-- 639  ",xo);
+    scanf("%d",&xa);
+    printf(" end ya: 0 .. %d  ",yo);
+    scanf("%d",&ya);
+    printf("red line is system,yellow line is create\n");
+    if (xa>=xo && xa<=639 && ya>=0 && ya<=yo)
+    /*       根据逐点算法生成直线                    */
+     {
+      outtextxy(xo,yo+5,"o");
+      outtextxy(xa,ya-10,"a");
+      dx=xa-xo;
+      dy=yo-ya;
+      if (dx>dy) c=dx;
+       else c=dy;
+      x=xo;
+      y=yo;
+      f=0.0;
+      setcolor(12);
+      line(xo,yo,xa,ya);
+      getch();
+      while (c>=0)
+      { putpixel(x,y,14);
+	if (f>0)
+	 {  x=x+1;
+	    f=f-dy;
+	    if (dx>dy) c=c-1;
+	  }
+	else
+	 { y=y-1;
+	   f=f+dx;
+	   if (dx<=dy) c=c-1;
+	  }
+       }
+     }
+   else printf("data error");
+  getch();
+  closegraph();
+  }
